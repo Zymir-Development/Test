@@ -1,0 +1,30 @@
+name: run test hello-devops
+
+on:
+  push:
+    branches:
+      - 'release/**'
+    paths-ignore:
+      - '.github/workflows/**'
+  pull_request:
+    branches:
+      - 'release/**'
+  workflow_dispatch:
+  workflow_call:
+
+jobs:
+  build:
+    if: >
+      github.event_name == 'push' ||
+      (github.event_name == 'pull_request' && github.event.pull_request.head.ref != 'main')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Run Test Command
+        run: |
+          echo "Hello Devops11345"
